@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "166144803088",
+    "firebase_url": "https://hotelmanagementssystemnative-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "hotelmanagementssystemnative",
+    "storage_bucket": "hotelmanagementssystemnative.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:166144803088:android:f97db4b0a2f4c872a26595",
+        "android_client_info": {
+          "package_name": "com.hms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "166144803088-g1nggsoh7od5phpnnph2gphhpob565mm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1LqXeLlsAwXcjY1-vcdbVPYg7A-cjVhw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "166144803088-g1nggsoh7od5phpnnph2gphhpob565mm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
