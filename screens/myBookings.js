@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import auth from '@react-native-firebase/auth';
-import {firebase} from '@react-native-firebase/database';
+import { firebase } from '@react-native-firebase/database';
 import {
   ActivityIndicator,
+  Alert,
   Button,
   ImageBackground,
   ScrollView,
@@ -13,7 +14,7 @@ import {
 } from 'react-native';
 import backgroundImage from '../assets/images/bg.jpg';
 
-function MyBookings({navigation}) {
+function MyBookings({ navigation }) {
   const [userId, setUserId] = useState('');
   const [bookedHotels, setBookedHotel] = useState([]);
   const [keys, setKeys] = useState([]);
@@ -24,7 +25,7 @@ function MyBookings({navigation}) {
       setLoader(true);
       if (user) {
         // User is signed in.
-        console.log('User is signed in');
+        // console.log('User is signed in');
         setUserId(user.uid);
         const reference = firebase
           .app()
@@ -50,9 +51,13 @@ function MyBookings({navigation}) {
             }
           });
       } else {
-        console.log('No user is signed in.');
+        console.log('my bookings No user is signed in.');
         // setuserLoginFlag(false);
         setLoader(false);
+
+        // Alert.alert("Your are not loggedin!")
+        setLoader(false);
+        setNoData(true);
         navigation.navigate('Hotels');
         // No user is signed in.
       }
@@ -84,10 +89,10 @@ function MyBookings({navigation}) {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => getData(),
-    //   headerRight: () => <Button title="refresh" onPress={refresh}></Button>,
+      //   headerRight: () => getData(),
+      headerRight: () => <Button title="refresh" onPress={refresh}></Button>,
     });
-  }, [navigation]);
+  }, []);
 
   const refresh = () => {
     getData();
@@ -125,7 +130,7 @@ function MyBookings({navigation}) {
                         backgroundColor: 'pink',
                       }}
                       onPress={() => delteBooking(e, i)}>
-                      <Text style={{color: 'black', fontWeight: 'bold'}}>
+                      <Text style={{ color: 'black', fontWeight: 'bold' }}>
                         X
                       </Text>
                     </TouchableOpacity>
@@ -183,7 +188,7 @@ function MyBookings({navigation}) {
                 </View>
               ))
             ) : (
-              <View style={{height: 350, justifyContent: 'center'}}>
+              <View style={{ height: 350, justifyContent: 'center' }}>
                 <ActivityIndicator size={100} color="white" />
               </View>
             )}

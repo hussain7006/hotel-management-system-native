@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Button,
@@ -12,13 +12,13 @@ import {
 } from 'react-native';
 import database from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
-import {firebase} from '@react-native-firebase/database';
+import { firebase } from '@react-native-firebase/database';
 
 import backgroundImage from '../assets/images/bg.jpg';
-import {ScrollView} from 'react-native-gesture-handler';
-import {useDispatch, useSelector} from 'react-redux';
+import { ScrollView } from 'react-native-gesture-handler';
+import { useDispatch, useSelector } from 'react-redux';
 
-function Hotels({navigation}) {
+function Hotels({ navigation }) {
   const [hotels, setHotels] = useState([]);
 
   // Set an initializing state whilst Firebase connects
@@ -35,7 +35,7 @@ function Hotels({navigation}) {
             style={styles.headerRightButtonStyles}
             onPress={signOut}>
             {!headerButtonLoader ? (
-              <Text style={{color: 'white', fontWeight: 'bold'}}>SignOut</Text>
+              <Text style={{ color: 'white', fontWeight: 'bold' }}>SignOut</Text>
             ) : (
               <ActivityIndicator size="small" color="white" />
             )}
@@ -45,13 +45,13 @@ function Hotels({navigation}) {
             style={styles.headerRightButtonStyles}
             onPress={() => navigation.navigate('Login')}>
             {!headerButtonLoader ? (
-              <Text style={{color: 'white', fontWeight: 'bold'}}>SignIn</Text>
+              <Text style={{ color: 'white', fontWeight: 'bold' }}>SignIn</Text>
             ) : (
               <ActivityIndicator size="small" color="white" />
             )}
           </TouchableOpacity>
         ),
-        
+
     });
   }, [navigation, userFlag, user]);
 
@@ -107,7 +107,7 @@ function Hotels({navigation}) {
     if (!user) {
       navigation.navigate('Login');
     } else {
-      navigation.navigate('BookHotel',{state:{hotelDetails}});
+      navigation.navigate('BookHotel', { state: { hotelDetails } });
     }
   };
 
@@ -124,29 +124,18 @@ function Hotels({navigation}) {
         });
 
         setUserFlag(reducerData.userLogin);
+      }).catch((err) => {
+        console.log(err);
+        navigation.navigate("Hotels")
       });
   };
 
-  // console.log("myReduxData: ", reducerData);
 
-  // getData('todos').then((snapshot) => {
-  //     if (snapshot.exists()) {
-
-  //         // setTodos([snapshot.val()])               // if getting data by id then use this
-  //         let Todos = Object.values(snapshot.val());  // if getting complete data then use this
-  //         setTodos(Todos)
-
-  //     } else {
-  //         console.log("No data available");
-  //     }
-  // }).catch((error) => {
-  //     console.error(error);
-  // });
 
   useEffect(() => {
     getData();
-    console.log('hotels page');
-    console.log(reducerData.userLogin);
+    // console.log('hotels page');
+    // console.log(reducerData.userLogin);
     setUserFlag(reducerData.userLogin);
     navigation.navigate('Hotels');
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
@@ -224,7 +213,7 @@ function Hotels({navigation}) {
                       <TouchableOpacity
                         style={styles.bookNowButton}
                         onPress={() => bookYourHotel(hotels[i])}>
-                        <Text style={{color: 'white'}}>Book Now</Text>
+                        <Text style={{ color: 'white' }}>Book Now</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -237,7 +226,7 @@ function Hotels({navigation}) {
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderWidth: 2,
+                // borderWidth: 2,
               }}>
               <ActivityIndicator size={100} color="white" />
             </View>
@@ -290,7 +279,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  img: {width: 160, height: 150},
+  img: { width: 160, height: 150 },
   right: {
     borderWidth: 1,
     borderColor: 'yellow',
@@ -326,7 +315,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 9,
   },
-  bookNowButtonDiv: {padding: 5},
+  bookNowButtonDiv: { padding: 5 },
   bookNowButton: {
     borderWidth: 2,
     borderRadius: 5,

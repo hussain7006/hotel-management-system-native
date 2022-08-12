@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {
   ActivityIndicator,
+  Alert,
   ImageBackground,
   StyleSheet,
   Text,
@@ -38,8 +39,8 @@ function Login({navigation}) {
       .signInWithEmailAndPassword(email, password)
       .then(res => {
         setLoader(false);
-        console.log('login successfully...');
-        console.log(res.user);
+        // console.log('login successfully...');
+        // console.log(res.user);
         dispatch({
           type: 'CHECKUSER',
         });
@@ -48,6 +49,8 @@ function Login({navigation}) {
       .catch(err => {
         console.log('login error:', err);
         setLoader(false);
+        Alert.alert("Connection error...")
+        navigation.navigate('Hotels');
       });
   };
   return (

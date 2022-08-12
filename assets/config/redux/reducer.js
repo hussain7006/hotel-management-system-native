@@ -14,9 +14,11 @@ export default (state = INITIAL_STATE, action) => {
   } else if (action.type == 'LOGOUT') {
     state.userLogin = false;
     state.userNames = {};
+    console.log("REDUCER.state.userLogin",state.userLogin);
     return state;
   } else if (action.type == 'CHECKUSER') {
     state.userLogin = true;
+    console.log("REDUCER.state.userLogin",state.userLogin);
     return state;
   } else if (action.type == 'SETUSERUID') {
     state.uid = action.value;

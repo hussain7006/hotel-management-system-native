@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import auth from '@react-native-firebase/auth';
-import {firebase} from '@react-native-firebase/database';
-import {ActivityIndicator, ImageBackground, StyleSheet, Text, TextInput, View} from 'react-native';
+import { firebase } from '@react-native-firebase/database';
+import { ActivityIndicator, Alert, ImageBackground, StyleSheet, Text, TextInput, View } from 'react-native';
 import backgroundImage from '../assets/images/bg.jpg';
 
-function Profile({navigation}) {
+function Profile({ navigation }) {
 
-    const [userProfile, setUserProfile] = useState([])
+  const [userProfile, setUserProfile] = useState([])
   const getProfileData = () => {
     auth().onAuthStateChanged(function (user) {
       if (user) {
         // User is signed in.
         console.log('User is signed in profile page');
         //   setuserLoginFlag(true);
-        //   setUserId(user.uid);
         const reference = firebase
           .app()
           .database(
@@ -24,16 +23,18 @@ function Profile({navigation}) {
           .once('value')
           .then(snapshot => {
             if (snapshot.exists()) {
-              setUserProfile([{...snapshot.val()}])
+              setUserProfile([{ ...snapshot.val() }])
             } else {
               console.log('No data available');
             }
           })
           .catch(err => {
-            console.log('Error:',err);
+            // console.log('Error:', err);
+            Alert.alert("Connection error...")
+            navigation.navigate('Hotels');
           });
       } else {
-        console.log('No user is signed in.');
+        Alert.alert("Your are not loggedin!")
         navigation.navigate('Hotels');
       }
     });
@@ -42,10 +43,7 @@ function Profile({navigation}) {
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       // do something
-      // console.log('feed is focused');
-      // console.log('bookHotelPage');
       setUserProfile([])
-      console.log('getting profile data::');
       getProfileData()
     });
 
@@ -60,35 +58,35 @@ function Profile({navigation}) {
       <View style={styles.headingView}>
         <Text style={styles.headingText}>Profile</Text>
       </View>
-      {userProfile.length?
-      <View style={styles.profileView}>
-        <View style={styles.inputTextDiv}>
-          <TextInput
-            style={[styles.inputText, {marginTop: 15}]}
-            placeholder="Name"
-            value={userProfile[0].name}
-            editable={false}></TextInput>
-          <TextInput
-            style={[styles.inputText, {marginTop: 15}]}
-            placeholder="Email"
-            value={userProfile[0].email}
-            editable={false}></TextInput>
-          <TextInput
-            style={[styles.inputText, {marginTop: 15}]}
-            placeholder="User Type"
-            value={userProfile[0].type}
-            editable={false}></TextInput>
-          <TextInput
-            style={[styles.inputText, {marginTop: 15}]}
-            placeholder="Password"
-            value={userProfile[0].password}
-            secureTextEntry={true}
-            editable={false}></TextInput>
+      {userProfile.length ?
+        <View style={styles.profileView}>
+          <View style={styles.inputTextDiv}>
+            <TextInput
+              style={[styles.inputText, { marginTop: 15 }]}
+              placeholder="Name"
+              value={userProfile[0].name}
+              editable={false}></TextInput>
+            <TextInput
+              style={[styles.inputText, { marginTop: 15 }]}
+              placeholder="Email"
+              value={userProfile[0].email}
+              editable={false}></TextInput>
+            <TextInput
+              style={[styles.inputText, { marginTop: 15 }]}
+              placeholder="User Type"
+              value={userProfile[0].type}
+              editable={false}></TextInput>
+            <TextInput
+              style={[styles.inputText, { marginTop: 15 }]}
+              placeholder="Password"
+              value={userProfile[0].password}
+              secureTextEntry={true}
+              editable={false}></TextInput>
+          </View>
+        </View> :
+        <View style={{ flex: 7, justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator size={100} color="white" />
         </View>
-      </View>:
-      <View style={{flex:7, justifyContent:'center', alignItems:'center'}}>
-        <ActivityIndicator size={100} color="white" />
-      </View>
       }
     </ImageBackground>
   );
